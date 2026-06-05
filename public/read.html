@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Read Data</title>
+  </head>
+  <body>
+    <h1>All Records</h1>
+
+    <button onclick="loadData()">Load Data</button>
+
+    <table border="1" cellpadding="10">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>City</th>
+        </tr>
+      </thead>
+      <tbody id="dataBody"></tbody>
+    </table>
+
+    <script>
+      async function loadData() {
+        const res = await fetch("/crudapi/viewing");
+        const data = await res.json();
+
+        const body = document.getElementById("dataBody");
+        body.innerHTML = "";
+
+        data.forEach((row) => {
+          body.innerHTML += `
+          <tr>
+            <td>${row.id}</td>
+            <td>${row.name}</td>
+            <td>${row.age}</td>
+            <td>${row.city}</td>
+          </tr>
+        `;
+        });
+      }
+
+      loadData();
+    </script>
+  </body>
+</html>
