@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Data</title>
+  </head>
+  <body>
+    <h1>Create Data</h1>
+
+    <form id="createForm">
+      <input type="text" id="name" placeholder="Name" required /><br /><br />
+      <input type="number" id="age" placeholder="Age" required /><br /><br />
+      <input type="text" id="city" placeholder="City" required /><br /><br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="msg"></p>
+
+    <script>
+      document
+        .getElementById("createForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const data = {
+            name: document.getElementById("name").value,
+            age: document.getElementById("age").value,
+            city: document.getElementById("city").value,
+          };
+
+          const res = await fetch("/crudapi/posting", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await res.json();
+          document.getElementById("msg").innerText = result.message;
+        });
+    </script>
+  </body>
+</html>
