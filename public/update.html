@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Update Data</title>
+  </head>
+  <body>
+    <h1>Update Record</h1>
+
+    <form id="updateForm">
+      <input
+        type="number"
+        id="id"
+        placeholder="ID to Update"
+        required
+      /><br /><br />
+
+      <input type="text" id="name" placeholder="New Name" /><br /><br />
+      <input type="number" id="age" placeholder="New Age" /><br /><br />
+      <input type="text" id="city" placeholder="New City" /><br /><br />
+
+      <button type="submit">Update</button>
+    </form>
+
+    <p id="msg"></p>
+
+    <script>
+      document
+        .getElementById("updateForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const id = document.getElementById("id").value;
+
+          const data = {
+            name: document.getElementById("name").value,
+            age: document.getElementById("age").value,
+            city: document.getElementById("city").value,
+          };
+
+          const res = await fetch(`/crudapi/updating/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await res.json();
+          document.getElementById("msg").innerText = result.message;
+        });
+    </script>
+  </body>
+</html>
